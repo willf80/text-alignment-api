@@ -9,5 +9,9 @@ export function wrapText(text: string, maxLine: number): string {
     return text;
   }
 
+  if (text.trim().length <= TextOptions.MaxLine) {
+    return text;
+  }
+
   return '';
 }

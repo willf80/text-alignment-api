@@ -4,8 +4,8 @@ import { wrapText } from '../../../src/core/utils/text-transform.util';
 describe('quand on passe un texte', () => {
   let text = '';
   describe('et que le texte est vide', () => {
-    beforeEach(() => (text = ''));
     it(`devrait retourner un texte vide`, () => {
+      text = '';
       const expectedResult = wrapText(text, TextOptions.MaxLine);
       expect(text).toBe(expectedResult);
     });
@@ -27,7 +27,9 @@ describe('quand on passe un texte', () => {
   describe('et que le texte est sur une ligne', () => {
     describe(`et que le texte fait moins de ${TextOptions.MaxLine} caractères`, () => {
       it(`devrait retourner la même ligne`, () => {
-        //
+        text = 'Longtemps, je me suis couché de bonne heure.';
+        const expectedResult = wrapText(text, TextOptions.MaxLine);
+        expect(text).toBe(expectedResult);
       });
     });
 

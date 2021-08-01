@@ -1,0 +1,19 @@
+{
+  "name": "text-alignment-api",
+  "version": "1.0.0",
+  "description": "Text alignment Open API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willf80/text-alignment-api.git"
+  },
+  "author": "Falone WILLY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/willf80/text-alignment-api/issues"
+  },
+  "homepage": "https://github.com/willf80/text-alignment-api#readme"
+}

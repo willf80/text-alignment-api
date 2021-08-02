@@ -6,32 +6,32 @@ describe('quand on passe un texte et une limite de caractères par ligne', () =>
   describe('et que le texte est vide', () => {
     it(`devrait retourner un texte vide`, () => {
       text = '';
-      const expectedResult = TextWrapper.wrap(text, TextOptions.MaxLine);
+      const expectedResult = TextWrapper.wrap(text, TextOptions.MaxLength);
       expect(expectedResult).toBe(text);
     });
   });
 
-  describe(`et que le nombre de caractères par ligne max est inférieur à ${TextOptions.MinLine}`, () => {
+  describe(`et que le nombre de caractères par ligne max est inférieur à ${TextOptions.MinLength}`, () => {
     it(`devrait lever une exception`, () => {
       const line = 39;
       try {
         TextWrapper.wrap(text, line);
       } catch (e) {
-        expect(`maxLine must be greater than or equal to ${TextOptions.MinLine}`).toBe(e.message);
+        expect(`maxLine must be greater than or equal to ${TextOptions.MinLength}`).toBe(e.message);
       }
     });
   });
 
   describe('et que le texte est sur une ligne', () => {
-    describe(`et que le texte fait moins de ${TextOptions.MaxLine} caractères`, () => {
+    describe(`et que le texte fait moins de ${TextOptions.MaxLength} caractères`, () => {
       it(`devrait retourner la même ligne`, () => {
         text = 'Longtemps, je me suis couché de bonne heure.';
-        const expectedResult = TextWrapper.wrap(text, TextOptions.MaxLine);
+        const expectedResult = TextWrapper.wrap(text, TextOptions.MaxLength);
         expect(expectedResult).toBe(text);
       });
     });
 
-    describe(`et que le texte fait plus de ${TextOptions.MaxLine} caractères`, () => {
+    describe(`et que le texte fait plus de ${TextOptions.MaxLength} caractères`, () => {
       beforeEach(() => {
         text = 
         `Longtemps, je me suis couché de bonne heure. Parfois, à peine ma bougie éteinte, mes yeux se fermaient si vite que je n’avais pas le temps de me dire: «Je m’endors.» Et, une demi-heure après, la pensée qu’il était temps de chercher le sommeil m’éveillait; je voulais poser le volume que je croyais avoir dans les mains.`;
@@ -45,7 +45,7 @@ m’endors.» Et, une demi-heure après, la pensée qu’il était temps de cher
 sommeil m’éveillait; je voulais poser le volume que je croyais avoir dans les
 mains.`;
 
-        const result = TextWrapper.wrap(text, TextOptions.MaxLine);
+        const result = TextWrapper.wrap(text, TextOptions.MaxLength);
         expect(result).toBe(mockResult);
       });
     });
@@ -75,7 +75,7 @@ bien étonné de trouver autour de moi une obscurité, douce et reposante pour m
 yeux, mais peut-être plus encore pour mon esprit, à qui elle apparaissait comme
 une chose sans cause, incompréhensible, comme une chose vraiment obscure.`;
 
-        const result = TextWrapper.wrap(text, TextOptions.MaxLine);
+        const result = TextWrapper.wrap(text, TextOptions.MaxLength);
         expect(result).toBe(mockResult);
     });
   });

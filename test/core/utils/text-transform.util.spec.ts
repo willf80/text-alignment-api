@@ -1,12 +1,12 @@
 import { TextOptions } from '../../../src/core/utils/text-options.enum';
-import { wrapText } from '../../../src/core/utils/text-transform.util';
+import { TextWrapper } from '../../../src/core/utils/text-transform.util';
 
 describe('quand on passe un texte et une limite de caractères par ligne', () => {
   let text = '';
   describe('et que le texte est vide', () => {
     it(`devrait retourner un texte vide`, () => {
       text = '';
-      const expectedResult = wrapText(text, TextOptions.MaxLine);
+      const expectedResult = TextWrapper.wrap(text, TextOptions.MaxLine);
       expect(expectedResult).toBe(text);
     });
   });
@@ -15,7 +15,7 @@ describe('quand on passe un texte et une limite de caractères par ligne', () =>
     it(`devrait lever une exception`, () => {
       const line = 39;
       try {
-        wrapText(text, line);
+        TextWrapper.wrap(text, line);
       } catch (e) {
         expect(`maxLine must be greater than or equal to ${TextOptions.MinLine}`).toBe(e.message);
       }
@@ -26,7 +26,7 @@ describe('quand on passe un texte et une limite de caractères par ligne', () =>
     describe(`et que le texte fait moins de ${TextOptions.MaxLine} caractères`, () => {
       it(`devrait retourner la même ligne`, () => {
         text = 'Longtemps, je me suis couché de bonne heure.';
-        const expectedResult = wrapText(text, TextOptions.MaxLine);
+        const expectedResult = TextWrapper.wrap(text, TextOptions.MaxLine);
         expect(expectedResult).toBe(text);
       });
     });
@@ -45,7 +45,7 @@ m’endors.» Et, une demi-heure après, la pensée qu’il était temps de cher
 sommeil m’éveillait; je voulais poser le volume que je croyais avoir dans les
 mains.`;
 
-        const result = wrapText(text, TextOptions.MaxLine);
+        const result = TextWrapper.wrap(text, TextOptions.MaxLine);
         expect(result).toBe(mockResult);
       });
     });
@@ -75,7 +75,7 @@ bien étonné de trouver autour de moi une obscurité, douce et reposante pour m
 yeux, mais peut-être plus encore pour mon esprit, à qui elle apparaissait comme
 une chose sans cause, incompréhensible, comme une chose vraiment obscure.`;
 
-        const result = wrapText(text, TextOptions.MaxLine);
+        const result = TextWrapper.wrap(text, TextOptions.MaxLine);
         expect(result).toBe(mockResult);
     });
   });

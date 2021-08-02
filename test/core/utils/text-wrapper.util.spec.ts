@@ -1,5 +1,5 @@
 import { TextOptions } from '../../../src/core/utils/text-options.enum';
-import { TextWrapper } from '../../../src/core/utils/text-transform.util';
+import { TextWrapper } from '../../../src/core/utils/text-wrapper.util';
 
 describe('quand on passe un texte et une limite de caractères par ligne', () => {
   let text = '';

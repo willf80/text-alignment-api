@@ -8,22 +8,23 @@ export class TextAlignmentService {
 
   public justify(text: string): string {
     const textWrapped = TextWrapper.wrap(text, this.maxLength);
-    
+
     const jusitfiedText = textWrapped
       .split(`\n`)
       .map((line, i, lines) =>
-        line.length === this.maxLength || i + 1 === lines.length
-          ? line
-          : this.justifyLine(line),
+        this.canJustify(line, i, lines) ? line : this.justifyLine(line),
       )
       .join('\n');
 
     return jusitfiedText;
   }
 
+  private canJustify(line: string, index: number, lines: string[]): boolean {
+    return line.length === this.maxLength || index + 1 === lines.length;
+  }
+
   private justifyLine(text: string): string {
     const words = text.split(` `);
-    if (words.length < 2) return text;
 
     const totalCharactersWithoutSpace = words.join('').length;
     const spreadSpace = this.maxLength - totalCharactersWithoutSpace;

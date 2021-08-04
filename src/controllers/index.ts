@@ -6,5 +6,5 @@ import justifyController from './justify.controller';
  * @param app 
  */
 export function loadRoutes(app: Express): void {
-  app.use('api/justify', justifyController);
+  app.use('/api/justify', justifyController);
 }

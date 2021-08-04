@@ -1,8 +1,13 @@
+import cors from 'cors';
+import express, { json, text } from 'express';
 import 'reflect-metadata';
-import express from 'express';
 import { loadRoutes } from './controllers';
 
+
 const app = express();
+
+app.use(cors());
+app.use(json(), text());
 
 loadRoutes(app);
 

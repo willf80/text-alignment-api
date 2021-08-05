@@ -9,7 +9,7 @@ justifyController.route('/').post(function (req: Request, res: Response) {
   const text = req.body as string;
   const textAlignmentService = Container.get(TextAlignmentService);
   const textJustify = textAlignmentService.justify(text);
-  
+
   res.setHeader('content-type', HeaderContentType.PlainText);
   res.send(textJustify);
 });

@@ -7,7 +7,7 @@ import { AuthService } from '../../../src/core/services/auth.service';
 import { AppDbContext } from '../../../src/infrastructure/data-access/app-db-context';
 import { UserRepository } from '../../../src/infrastructure/repositories/user.repo';
 
-describe(`${AuthService.name}`, () => {
+describe(AuthService.name, () => {
   let authService: AuthService;
   const AppDbContextMock = <jest.Mock<AppDbContext>>AppDbContext;
   const userRepo = new UserRepository(new AppDbContextMock());

@@ -45,7 +45,7 @@ export class AuthService {
     password,
   }: LoginForm): Promise<ApiResponse> {
     const errorMessage = `Email ou mot de passe incorrect`;
-    
+
     const user = await this.userRepo.findOne(email);
     if (!user) {
       return ApiResponse.withError(

@@ -1,12 +1,57 @@
 import { Service } from 'typedi';
+import { ApiResponse } from '../../common/api-response';
+import {
+  getReason,
+  HttpStatusCode
+} from '../../common/http-status-code.constant';
+import { LimitRateRepository } from '../../infrastructure/repositories/limit-rate.repo';
 import { TextOptions } from '../utils/text-options.enum';
 import { TextWrapper } from '../utils/text-wrapper.util';
 
 @Service()
 export class TextAlignmentService {
   private readonly maxLength = TextOptions.MaxLength;
+  private readonly limitRateMax = 80_000;
 
-  public justify(text: string): string {
+  constructor(private readonly limitRateRepo: LimitRateRepository) {}
+
+  public async justify(email: string, text: string): Promise<ApiResponse> {
+    const errorMessage = `Une erreur s'est produite pendant le traitement, merci de réessayer plus tard`;
+
+    let limitRate = await this.limitRateRepo.findTodayRate(email);
+    if (!limitRate) {
+      // Une nouvelle journée commence
+      limitRate = await this.limitRateRepo.create(email);
+    }
+
+    if (!limitRate) {
+      return ApiResponse.withError(new Error(errorMessage));
+    }
+
+    const totalWordsOfText = this.countWords(text);
+
+    if (limitRate.totalWords + totalWordsOfText > this.limitRateMax) {
+      return ApiResponse.withError(
+        new Error(getReason(HttpStatusCode.PAYMENT_REQUIRED)),
+        null,
+        HttpStatusCode.PAYMENT_REQUIRED,
+      );
+    }
+
+    const jusitfiedText = this.justifyText(text);
+
+    const [totalLineAffected] = await this.limitRateRepo.updateTotalWords(
+      email,
+      limitRate.totalWords + totalWordsOfText,
+    );
+    if (totalLineAffected) {
+      return ApiResponse.withSuccess(jusitfiedText);
+    }
+
+    return ApiResponse.withError(new Error(errorMessage));
+  }
+
+  private justifyText(text: string) {
     const textWrapped = TextWrapper.wrap(text, this.maxLength);
 
     const jusitfiedText = textWrapped
@@ -15,8 +60,21 @@ export class TextAlignmentService {
         this.canJustify(line, i, lines) ? line : this.justifyLine(line),
       )
       .join('\n');
-
     return jusitfiedText;
+  }
+
+  private countWords(text: string): number {
+    return text
+      .split('\n')
+      .filter((t) => t)
+      .reduce((count, line) => {
+        count += line
+          .trim()
+          .split(` `)
+          .filter((word) => word)
+          .map((word) => word.trim()).length;
+        return count;
+      }, 0);
   }
 
   private canJustify(line: string, index: number, lines: string[]): boolean {

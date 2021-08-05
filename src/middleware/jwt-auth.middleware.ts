@@ -15,7 +15,7 @@ export function jwtAuth(req: Request, res: Response, next: NextFunction): unknow
     }
 
     const userRepo = Container.get(UserRepository);
-    const user = userRepo.findOne(currentUser.email);
+    const user = await userRepo.findOne(currentUser.email);
     
     if (!user) {
       return res.status(HttpStatusCode.UNAUTHORIZED).json(result);

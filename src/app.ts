@@ -1,12 +1,15 @@
-import 'reflect-metadata';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { json, NextFunction, Request, Response, text } from 'express';
 import helmet from 'helmet';
 import passport from 'passport';
 import { ExtractJwt, Strategy, StrategyOptions } from 'passport-jwt';
+import 'reflect-metadata';
 import Container from 'typedi';
-import { getReason, HttpStatusCode } from './common/http-status-code.constant';
+import {
+  HttpStatusCode,
+  HttpStatusReason,
+} from './common/http-status-code.constant';
 import { loadRoutes } from './controllers';
 import { AppDbContext } from './infrastructure/data-access/app-db-context';
 const app = express();
@@ -41,8 +44,8 @@ db.context.sequelize.sync().then(() => {
 
 loadRoutes(app);
 
-app.use((error: unknown, req: Request, res: Response, _next: NextFunction) => {
-  const message = getReason(HttpStatusCode.INTERNAL_SERVER_ERROR);
+app.use((error: unknown, req: Request, res: Response, _: NextFunction) => {
+  const message = HttpStatusReason.get(HttpStatusCode.INTERNAL_SERVER_ERROR);
   res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({ message });
 });
 

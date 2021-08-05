@@ -1,8 +1,8 @@
 import { Service } from 'typedi';
 import { ApiResponse } from '../../common/api-response';
 import {
-  getReason,
-  HttpStatusCode
+  HttpStatusCode,
+  HttpStatusReason
 } from '../../common/http-status-code.constant';
 import { LimitRateRepository } from '../../infrastructure/repositories/limit-rate.repo';
 import { TextOptions } from '../utils/text-options.enum';
@@ -32,7 +32,7 @@ export class TextAlignmentService {
 
     if (limitRate.totalWords + totalWordsOfText > this.limitRateMax) {
       return ApiResponse.withError(
-        new Error(getReason(HttpStatusCode.PAYMENT_REQUIRED)),
+        new Error(HttpStatusReason.get(HttpStatusCode.PAYMENT_REQUIRED)),
         null,
         HttpStatusCode.PAYMENT_REQUIRED,
       );

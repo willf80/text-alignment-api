@@ -14,7 +14,7 @@ export class AppDbContext {
   private initializeDb(): DbContext {
     const sequelize = new Sequelize({
       dialect: 'sqlite',
-      storage: 'tictactrip_justify.sqlite',
+      storage: process.env.DB_NAME,
     });
 
     const user = UserBuilder(sequelize);

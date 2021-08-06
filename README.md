@@ -1,26 +1,45 @@
-# Objectif
-Implémenter et déployer une API REST qui justifie un texte passé en paramètre.
+# Text Alignment API 
 
-## Contraintes
+Service built using [Node](https://nodejs.org/en/),  [TypeScript](https://www.typescriptlang.org/) and [Express](https://expressjs.com/fr/)
 
-- La longueur des lignes du texte justifié doit être de 80 caractères.
-- L’endpoint doit être de la forme /api/justify et doit retourner un texte justifié suite à une requête POST avec un body de ContentType text/plain
-- L’api doit utiliser un mécanisme d’authentification via token unique. En utilisant par exemple une endpoint api/token qui retourne un token d’une requête - POST avec un json body {"email": "foo@bar.com"}.
-- Il doit y avoir un rate limit par token pour l’endpoint /api/justify, fixé à 80 000 mots par jour, si il y en a plus dans la journée il faut alors renvoyer une erreur 402 Payment Required.
-- Le code doit être déployé sur un url ou une ip public
-- Le code doit être rendu sur github
-- Langage : Nodejs
-- **PAS** d’usage de bibliothèque externe pour la justification
+## INSTRUCTIONS
+----
 
-## Bonus
-- Les tests, le coverage
-- La lisibilité
-- La documentation
+### Installation
 
-# Analyse de l'algo
+```bash
+cd ~
+git clone https://github.com/willf80/text-alignment-api.git
+```
 
-## TextTransform
-Un utilitaire contenant une fonction qui reduit le nombre de mots par ligne à moins de 80.
+### Install dependencies
 
-## TextAligmentService
-Une classe contenant la fonction qui permet de justifier le text
+```bash
+yarn
+```
+
+### Add .env file in root directory
+
+```text
+JWT_SECRET=...
+APP_PORT=8080
+DB_NAME=...
+```
+
+### Launch
+
+```bash
+yarn start
+```
+
+API is expose on `http://localhost:8080` 
+
+API documentation will show immediately
+
+
+## ABOUT
+----
+
+- LinkedIn: https://www.linkedin.com/in/willyfalone/
+- CodinGame: https://www.codingame.com/profile/4916783ee2c85910bf05f088f5fccc3d1838862 
+- Malt: https://www.malt.fr/profile/willyfalone 

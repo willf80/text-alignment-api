@@ -1,0 +1,199 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation de l'api d'alignement de texte.",
+    "version": "1.0.0",
+    "title": "Text Alignment API",
+    "contact": {
+      "email": "willyfkouadio@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/willf80/text-alignment-api/blob/3620be66460c0648f0350319b89cf48600de0f56/LICENSE"
+    }
+  },
+  "tags": [
+    {
+      "name": "justify",
+      "description": "Api de alignement de texte"
+    },
+    {
+      "name": "auth",
+      "description": "Inscription et demande de jeton"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/api/justify": {
+      "post": {
+        "tags": [
+          "justify"
+        ],
+        "summary": "Justifie le texte passé dans le body",
+        "description": "",
+        "operationId": "justify",
+        "consumes": [
+          "text/plain"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "texte à justifier",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Justify"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "opération reussie"
+          },
+          "400": {
+            "description": "Unauthorized"
+          },
+          "402": {
+            "description": "Payment required"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Création de compte",
+        "description": "Créé un compte utilisateur",
+        "operationId": "authRegister",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Données necessaire pour la création de compte",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "opération reussie",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Status invalide"
+          }
+        }
+      }
+    },
+    "/api/auth/token": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Demande de token",
+        "description": "",
+        "operationId": "authToken",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "order placed for purchasing the pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Token": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "expiresIn": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "RegisterForm": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginForm": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "SuccessResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Justify": {
+      "type": "string"
+    }
+  }
+}
